@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="getPrinseqAnalysis" name="PRINSEQ Sequence Analyzer:" 
+      version="0.11.7">
+    <description>
+        Use PRINSEQ to do quality control checks on raw sequence data.
+    </description>
+    <!-- Call the getPrinseqAnalysis script, set input parameters according 
+         to user choices. -->
+    <command interpreter="bash">
+        getPrinseqAnalysis.sh -f ${fisInput.rbInput} -o ${fosOutput}
+        #if $fisInput.rbInput == "single"
+            #if $fisInput.fisSingleInput.rbSingle == "fastq"
+                -i $fisInput.fisSingleInput.fisSingleFastq
+                -e $fisInput.fisSingleInput.rbSingle
+            #elif $fisInput.fisSingleInput.rbSingle == "fasta"
+                -i $fisInput.fisSingleInput.fisSingleFasta
+                -e $fisInput.fisSingleInput.rbSingle
+            #end if
+        #elif $fisInput.rbInput == "zip"
+            -i $fisInput.fisZip -e $fisInput.rbZip
+        #end if
+    </command>
+    <inputs>
+        <!-- Catch the input file. -->
+        <conditional name="fisInput">
+            <param name="rbInput" type="select" label="Single or zip file?"
+                   multiple="false">
+                <option value="single" selected="true">Single file</option>
+                <option value="zip">Zip file</option>
+            </param>
+            <when value="single">
+                <!-- Catch the single input file -->
+                <conditional name="fisSingleInput">
+                    <param name="rbSingle" type="select" 
+                           label="FastQ or fastA file." multiple="false">
+                        <option value="fastq" selected="true">FastQ file
+                        </option>
+                        <option value="fasta">FastA file</option>
+                    </param>
+                    <when value="fastq">
+                        <param name="fisSingleFastq" type="data" format="fastq"
+                               label="FastQ file."/>
+                    </when>
+                    <when value="fasta">
+                        <param name="fisSingleFasta" type="data" format="fasta"
+                               label="FastA file."/>
+                    </when>
+                </conditional>
+            </when>
+            <!-- Catch multiple input files -->
+            <when value="zip">
+                <param name="rbZip" type="select" label="FastQ or fastA file(s)."
+                       multiple="false">
+                    <option value="fastq" selected="true">FastQ file(s)</option>
+                    <option value="fasta">FastA file(s)</option>
+                </param>
+                <param name="fisZip" type="data" format="zip" label="Zip file."/>
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <!-- Catch the output file. -->
+        <data format="html" name="fosOutput" label="PRINSEQ_Report"/>
+    </outputs>
+    <tests>
+    </tests>
+    <help>
+        .. class:: infomark
+
+        The PRINSEQ tool will do quality control checks on raw sequence data.
+        These checks include summary graphs and tables.
+
+        .. class:: warningmark
+
+        Files in fastQ format should always have a .fastq extension.
+        Files in fastA format should always have a .fasta extension.
+
+--------
+
+        Source(s):
+            - **Schmieder R, Edwards R**, Quality control and preprocessing of
+              metagenomic datasets.
+              Bioinformatics. 2011; 27(6): 863-864.
+              **doi: 10.1093/bioinformatics/btr026**
+              http://prinseq.sourceforge.net/
+    </help>
+</tool>
