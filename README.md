@@ -32,13 +32,13 @@ sudo cpan JSON
 Download and install the tool according to the following steps.
 ```
 cd /home/Tools
-sudo git clone https://github.com/JasperBoom/galaxy-tool-prinseq-analysis
-sudo chmod -R 755 galaxy-tool-prinseq-analysis
+sudo git clone https://github.com/JasperBoom/galaxy-tool-prinseq-sequence-analysis
+sudo chmod -R 755 galaxy-tool-prinseq-sequence-analysis
 ```
 ```
 sudo mkdir -m 755 /home/galaxy/tools/directoryname
-sudo cp /home/Tools/galaxy-tool-prinseq-analysis/getPrinseqAnalysis.sh /home/galaxy/tools/directoryname/getPrinseqAnalysis.sh
-sudo cp /home/Tools/galaxy-tool-prinseq-analysis/getPrinseqAnalysis.xml /home/galaxy/tools/directoryname/getPrinseqAnalysis.xml
+sudo cp /home/Tools/galaxy-tool-prinseq-sequence-analysis/getPrinseqAnalysis.sh /home/galaxy/tools/directoryname/getPrinseqAnalysis.sh
+sudo cp /home/Tools/galaxy-tool-prinseq-sequence-analysis/getPrinseqAnalysis.xml /home/galaxy/tools/directoryname/getPrinseqAnalysis.xml
 ```
 Edit the following file in order to make galaxy display the tool.
 ```
